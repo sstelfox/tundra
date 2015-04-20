@@ -1,0 +1,10 @@
+RSpec/FilePath:
+  Enabled: false
+# The following is broken, it doesn't consider module documentation in other
+# files (mostly a problem for namespace modules), it doesn't properly respect
+# :nodoc: as claimed in the documentation and it doesn't consider a module a
+# namespace module if if contains a constant definition.
+Style/Documentation:
+  Enabled: false
+require:
+- rubocop-rspec
