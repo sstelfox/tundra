@@ -4,7 +4,7 @@ module StatsCollector
   # to the end of the ring, iterated over, counted, cleared and explicitely
   # updated.
   #
-  # @!attribute [rw] ring
+  # @!attribute [r] ring
   #   @return [Array<Object>] The internal ring storing the currently stored
   #     elements.
   # @!attribute [rw] ring_size
@@ -20,17 +20,12 @@ module StatsCollector
     #
     # @param [Object] value Object to add to the ring
     # @return [Object,Nil] Element removed from the ring if any
-    def << (value)
+    def <<(value)
       ring.push(value)
       (count > ring_size ? ring.shift : nil)
     end
 
     alias_method :push, :<<
-
-    # Empty the internal ring.
-    def clear
-      self.ring = []
-    end
 
     # Returns the current number of elements stored in the ring.
     #
@@ -56,7 +51,7 @@ module StatsCollector
     #   with.
     def initialize(ring_size, initial_values = [])
       self.ring_size = ring_size
-      self.ring = set_ring(initial_values)
+      self.ring = initial_values
     end
 
     # Update the contents of the ring to the provided values. If more values
@@ -64,12 +59,13 @@ module StatsCollector
     # provided ring.
     #
     # @param [Array<Object>] values
-    def set_ring(values)
-      self.ring = (values.count >= ring_size) ? values[-ring_size..-1] : values
+    def ring=(values)
+      @ring = (values.count >= ring_size) ? values[-ring_size..-1] : values
     end
 
     protected
 
-    attr_accessor :ring, :ring_size
+    attr_reader :ring
+    attr_accessor :ring_size
   end
 end
