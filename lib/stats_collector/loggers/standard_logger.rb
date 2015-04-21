@@ -49,7 +49,7 @@ module StatsCollector
       # @param [Symbol] severity The severity to log the message.
       # @param [String] message The message to get logged.
       def log(severity, message)
-        logger.log(severity_lookup(severity), message, APP_LOG_NAME)
+        logger.log(severity_lookup(severity), message, LOG_NAME)
       end
 
       alias_method :add, :log
