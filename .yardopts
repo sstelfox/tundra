@@ -1,1 +1,11 @@
---default-return void --private --protected
+--default-return void
+--private
+--protected
+--charset utf-8
+--readme README.md
+--markup markdown
+--markup-provider redcarpet
+lib/**/*.rb
+-
+LICENSE.txt
+*.md

@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.version  = StatsCollector::VERSION
   spec.authors  = ['Sam Stelfox']
   spec.email    = ['sstelfox@bedroomprogrammers.net']
-  spec.files    = `git ls-files -z`.split('\x0').reject { |f| f =~ %r{^spec\/} }
+  spec.files    = `git ls-files`.split("\x0").reject { |f| f =~ %r{^spec\/} }
 
   spec.summary      = 'A generic stats collector for Ruby profiling'
   spec.description  = spec.summary
@@ -28,7 +28,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'coveralls'
   spec.add_development_dependency 'simplecov'
 
-  spec.add_development_dependency 'rdoc'
   spec.add_development_dependency 'redcarpet'
   spec.add_development_dependency 'yard'
 
