@@ -19,10 +19,18 @@ module StatsCollector
       alias :fatal :add
       alias :info :add
       alias :log :add
-      alias :method_missing :add
-      alias :responds_to? :add
       alias :unknown :add
       alias :warn :add
+
+      alias :method_missing :add
+
+      # Simple mechanism for indicating that we are able to respond and handle
+      # any message. This is normally a bad idea, and I may need to handle some
+      # additional specific functionality directly if this becomes an issue.
+      # For a null object though this is probably pretty safe.
+      def respond_to?(_method)
+        true
+      end
     end
   end
 end
