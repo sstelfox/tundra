@@ -1,6 +1,7 @@
 require 'logger'
 
 require 'stats_collector/loggers'
+require 'stats_collector/ring_buffer'
 require 'stats_collector/version'
 
 # Parent namespace for this codebase, encapsulating everything within this
@@ -18,7 +19,7 @@ module StatsCollector
   # Replace the current singleton instance for the logger with the provided
   # one.
   #
-  # @param [Object] An appropriate logger instance.
+  # @param [Object] logger An appropriate logger instance.
   def self.logger=(logger)
     @logger = logger
   end
