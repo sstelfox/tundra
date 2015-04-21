@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 RSpec.shared_examples('a logger') do
-  it { expect(subject).to respond_to(:<<) }
   it { expect(subject).to respond_to(:add) }
   it { expect(subject).to respond_to(:debug) }
   it { expect(subject).to respond_to(:error) }
