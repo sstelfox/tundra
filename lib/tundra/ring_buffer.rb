@@ -21,7 +21,7 @@ module Tundra
     # @param [Object] value Object to add to the ring
     # @return [Object,Nil] Element removed from the ring if any
     def <<(value)
-      ring.push(value)
+      ring << value
       (count > ring_size ? ring.shift : nil)
     end
 
