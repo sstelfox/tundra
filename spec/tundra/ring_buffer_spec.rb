@@ -12,6 +12,15 @@ RSpec.describe(Tundra::RingBuffer) do
     expect(subject).to be_empty
   end
 
+  context '#clear' do
+    it 'empties the contents of the buffer' do
+      subject << rand(50)
+      expect(subject).to_not be_empty
+      subject.clear!
+      expect(subject).to be_empty
+    end
+  end
+
   context '#count' do
     it 'returns the number of items in the buffer' do
       contents = rand(buffer_size).times.to_a

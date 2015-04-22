@@ -27,6 +27,11 @@ module Tundra
 
     alias_method :push, :<<
 
+    # Completely empty out the internal ring.
+    def clear!
+      ring.clear
+    end
+
     # Returns the current number of elements stored in the ring.
     #
     # @return [Fixnum]
