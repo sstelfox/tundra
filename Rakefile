@@ -1,10 +1,26 @@
 require 'bundler/gem_tasks'
 
+desc 'Run a console with the application loaded'
+task console: [:environment] do
+  require 'pry'
+  pry
+end
+
+task :default do
+  Rake::Task[:docs].invoke     if Rake::Task.task_defined?(:docs)
+  Rake::Task[:rubocop].invoke  if Rake::Task.task_defined?(:rubocop)
+  Rake::Task[:spec].invoke     if Rake::Task.task_defined?(:spec)
+end
+
 begin
-  require 'rspec/core/rake_task'
-  RSpec::Core::RakeTask.new(:spec)
+  require 'yard'
+  YARD::Rake::YardocTask.new(:docs)
 rescue LoadError
-  puts 'RSpec isn\'t available to the rake environment'
+  puts 'Yardoc isn\'t available to the rake environment'
+end
+
+task 'environment' do
+  require 'tundra'
 end
 
 begin
@@ -19,24 +35,8 @@ rescue LoadError
 end
 
 begin
-  require 'yard'
-  YARD::Rake::YardocTask.new(:docs)
+  require 'rspec/core/rake_task'
+  RSpec::Core::RakeTask.new(:spec)
 rescue LoadError
-  puts 'Yardoc isn\'t available to the rake environment'
-end
-
-task :default do
-  Rake::Task[:docs].invoke     if Rake::Task.task_defined?(:docs)
-  Rake::Task[:rubocop].invoke  if Rake::Task.task_defined?(:rubocop)
-  Rake::Task[:spec].invoke     if Rake::Task.task_defined?(:spec)
-end
-
-task 'environment' do
-  require 'stats_collector'
-end
-
-desc 'Run a console with the application loaded'
-task console: [:environment] do
-  require 'pry'
-  pry
+  puts 'RSpec isn\'t available to the rake environment'
 end

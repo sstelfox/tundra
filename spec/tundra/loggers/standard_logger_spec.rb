@@ -1,11 +1,11 @@
 require 'spec_helper'
 require 'shared_examples/common_logger_examples'
 
-RSpec.describe(StatsCollector::Loggers::StandardLogger) do
+RSpec.describe(Tundra::Loggers::StandardLogger) do
   it_behaves_like 'a logger'
 
   let(:log_double) { double('Logger') }
-  let(:prog_name) { StatsCollector::Loggers::LOG_NAME }
+  let(:prog_name) { Tundra::Loggers::LOG_NAME }
 
   it 'logs a message at the provided severity' do
     message = 'Test message'
@@ -58,6 +58,50 @@ RSpec.describe(StatsCollector::Loggers::StandardLogger) do
     end
   end
 
+  context '#level' do
+    it 'defaults to the info log level' do
+      expect(subject.level).to eq(:info)
+    end
+  end
+
+  context '#level=' do
+    it 'can set the log level' do
+      expect(subject.level).to eq(:info)
+      subject.level = :warn
+      expect(subject.level).to eq(:warn)
+    end
+  end
+
+  context '#level_lookup' do
+    it 'returns a Hash' do
+      expect(subject.send(:level_lookup)).to be_instance_of(Hash)
+    end
+
+    it 'can return the :debug symbol when provided with the DEBUG constant' do
+      expect(subject.send(:level_lookup)[::Logger::DEBUG]).to be(:debug)
+    end
+
+    it 'can return the :info symbol when provided with the INFO constant' do
+      expect(subject.send(:level_lookup)[::Logger::INFO]).to be(:info)
+    end
+
+    it 'can return the :warn symbol when provided with the WARN constant' do
+      expect(subject.send(:level_lookup)[::Logger::WARN]).to be(:warn)
+    end
+
+    it 'can return the :error symbol when provided with the ERROR constant' do
+      expect(subject.send(:level_lookup)[::Logger::ERROR]).to be(:error)
+    end
+
+    it 'can return the :fatal symbol when provided with the FATAL constant' do
+      expect(subject.send(:level_lookup)[::Logger::FATAL]).to be(:fatal)
+    end
+
+    it 'can return the :unknown symbol when provided with the UNKNOWN constant' do
+      expect(subject.send(:level_lookup)[::Logger::UNKNOWN]).to be(:unknown)
+    end
+  end
+
   context '#severity_lookup' do
     it 'returns the DEBUG constant when provided with :debug' do
       expect(subject.send(:severity_lookup, :debug)).to eq(::Logger::DEBUG)
@@ -85,6 +129,10 @@ RSpec.describe(StatsCollector::Loggers::StandardLogger) do
 
     it 'returns the value of the UNKNOWN constant when provided a bad value' do
       expect(subject.send(:severity_lookup, 'what?')).to eq(::Logger::UNKNOWN)
+    end
+
+    it 'can return a provided constant when provided with a bad value' do
+      expect(subject.send(:severity_lookup, 'weooo', :info)).to eq(::Logger::INFO)
     end
   end
 end

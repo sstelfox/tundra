@@ -1,4 +1,4 @@
-module StatsCollector
+module Tundra
   # This ring buffer class works a lot like a limited version of the standard
   # Array but only keeps a certain number of elements. Elements can be appended
   # to the end of the ring, iterated over, counted, cleared and explicitely
