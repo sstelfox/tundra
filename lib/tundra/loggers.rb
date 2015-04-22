@@ -16,6 +16,12 @@ module Tundra
       unknown:  ::Logger::UNKNOWN
     }
 
+    # The maximum number of messages the memory logger will store at any given
+    # time. This is probably more than enough but generally won't take much
+    # memory so is safe to increase in the future if it ever gets to be a
+    # problem.
+    LOG_MEMORY_RING_SIZE = 100
+
     # The 'progname' value used when printing logs.
     LOG_NAME = 'Tundra'
   end

@@ -17,6 +17,16 @@ module Tundra
         self.level = :info
       end
 
+      # Log the provided message at the provided severity level.
+      #
+      # @param [Symbol] severity The severity to log the message.
+      # @param [String] message The message to get logged.
+      def log(severity, message)
+        logger.log(severity_lookup(severity), message, LOG_NAME)
+      end
+
+      alias_method :add, :log
+
       # @!group Configuration
 
       # Returns the currently configured log level for this instance as a
@@ -32,16 +42,6 @@ module Tundra
       def level=(new_level)
         logger.level = severity_lookup(new_level, :info)
       end
-
-      # Log the provided message at the provided severity level.
-      #
-      # @param [Symbol] severity The severity to log the message.
-      # @param [String] message The message to get logged.
-      def log(severity, message)
-        logger.log(severity_lookup(severity), message, LOG_NAME)
-      end
-
-      alias_method :add, :log
 
       # @!endgroup
       # @!group Log Shortcut Methods
