@@ -1,3 +1,5 @@
+require 'tundra/loggers/level_shortcuts'
+
 require 'tundra/loggers/memory_logger'
 require 'tundra/loggers/null_logger'
 require 'tundra/loggers/standard_logger'

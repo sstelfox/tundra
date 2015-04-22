@@ -13,6 +13,8 @@ module Tundra
     # @!attribute [rw] messages
     #   @return [Array<Array(Symbol, String)>] List of backlogged messages.
     class MemoryLogger
+      include LevelShortcuts
+
       # Initialize an instance of a MemoryLogger
       def initialize
         self.messages = RingBuffer.new(LOG_MEMORY_RING_SIZE)
@@ -37,52 +39,6 @@ module Tundra
       end
 
       alias_method :add, :log
-
-      # @!group Log Shortcut Methods
-
-      # Log the provided message at the debug level.
-      #
-      # @param [String] message The message to get logged.
-      def debug(message)
-        log(:debug, message)
-      end
-
-      # Log the provided message at the error level.
-      #
-      # @param [String] message The message to get logged.
-      def error(message)
-        log(:error, message)
-      end
-
-      # Log the provided message at the fatal level.
-      #
-      # @param [String] message The message to get logged.
-      def fatal(message)
-        log(:fatal, message)
-      end
-
-      # Log the provided message at the info level.
-      #
-      # @param [String] message The message to get logged.
-      def info(message)
-        log(:info, message)
-      end
-
-      # Log the provided message at the unknown level.
-      #
-      # @param [String] message The message to get logged.
-      def unknown(message)
-        log(:unknown, message)
-      end
-
-      # Log the provided message at the warning level.
-      #
-      # @param [String] message The message to get logged.
-      def warn(message)
-        log(:warn, message)
-      end
-
-      # @!endgroup
 
       protected
 
