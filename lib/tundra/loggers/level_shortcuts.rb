@@ -1,5 +1,9 @@
 module Tundra
   module Loggers
+    # Provides common shortcuts to logging at the provided log level. This
+    # assumes that the class this module is included in implements the #log
+    # message (taking two arguments severity as a symbol, and the message as a
+    # string).
     module LevelShortcuts
       # @!group Log Shortcut Methods
 
