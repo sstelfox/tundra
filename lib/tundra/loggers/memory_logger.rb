@@ -34,7 +34,6 @@ module Tundra
       # @param [String] message The message to get logged.
       def log(severity, message)
         messages << [severity, message]
-        true
       end
 
       alias_method :add, :log
