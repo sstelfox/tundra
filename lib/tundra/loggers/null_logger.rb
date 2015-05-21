@@ -6,6 +6,8 @@ module Tundra
     # arguments. Other calls are handled by method missing which is slower but
     # ensures complete compatibility with the Logger mechanism.
     class NullLogger
+      include LevelShortcuts
+
       # A logging method that does exactly nothing, as any good null logger
       # should. These could be handled by method missing but the direct method
       # provides a significant performance improvement.
@@ -15,13 +17,6 @@ module Tundra
       end
 
       alias_method :add, :log
-
-      alias_method :debug, :log
-      alias_method :error, :log
-      alias_method :fatal, :log
-      alias_method :info, :log
-      alias_method :unknown, :log
-      alias_method :warn, :log
 
       # Handle all other method calls simply and directly. Normally this would
       # potentially be a dangerous thing to do but anything that would be

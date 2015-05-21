@@ -10,6 +10,8 @@ module Tundra
     #     used as the output for all logged messages. Defaults to an instance
     #     of the standard Ruby Logger class.
     class StandardLogger
+      include LevelShortcuts
+
       # Simple initialization of the standard logger. Just creates the backend
       # logger.
       def initialize
@@ -41,51 +43,6 @@ module Tundra
       # invalid it will default to info.
       def level=(new_level)
         logger.level = severity_lookup(new_level, :info)
-      end
-
-      # @!endgroup
-      # @!group Log Shortcut Methods
-
-      # Log the provided message at the debug level.
-      #
-      # @param [String] message The message to get logged.
-      def debug(message)
-        log(:debug, message)
-      end
-
-      # Log the provided message at the error level.
-      #
-      # @param [String] message The message to get logged.
-      def error(message)
-        log(:error, message)
-      end
-
-      # Log the provided message at the fatal level.
-      #
-      # @param [String] message The message to get logged.
-      def fatal(message)
-        log(:fatal, message)
-      end
-
-      # Log the provided message at the info level.
-      #
-      # @param [String] message The message to get logged.
-      def info(message)
-        log(:info, message)
-      end
-
-      # Log the provided message at the unknown level.
-      #
-      # @param [String] message The message to get logged.
-      def unknown(message)
-        log(:unknown, message)
-      end
-
-      # Log the provided message at the warning level.
-      #
-      # @param [String] message The message to get logged.
-      def warn(message)
-        log(:warn, message)
       end
 
       # @!endgroup
