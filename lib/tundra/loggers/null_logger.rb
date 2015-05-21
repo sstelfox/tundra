@@ -11,12 +11,11 @@ module Tundra
       # provides a significant performance improvement.
       #
       # @param [Array<Object>] _args Completely ignored
-      # @return [True] Logging is always successful.
       def log(*_args)
-        true
       end
 
       alias_method :add, :log
+
       alias_method :debug, :log
       alias_method :error, :log
       alias_method :fatal, :log
