@@ -7,30 +7,36 @@ module StatsCollector
     # ensures complete compatibility with the Logger mechanism.
     class NullLogger
       # A logging method that does exactly nothing, as any good null logger
-      # should.
+      # should. These could be handled by method missing but the direct method
+      # provides a significant performance improvement.
       #
-      # @params [Array<Object>] _args Completely ignored
-      def add(*_args)
-      end
-
-      alias :<< :add
-      alias :debug :add
-      alias :error :add
-      alias :fatal :add
-      alias :info :add
-      alias :log :add
-      alias :unknown :add
-      alias :warn :add
-
-      alias :method_missing :add
-
-      # Simple mechanism for indicating that we are able to respond and handle
-      # any message. This is normally a bad idea, and I may need to handle some
-      # additional specific functionality directly if this becomes an issue.
-      # For a null object though this is probably pretty safe.
-      def respond_to?(_method)
+      # @param [Array<Object>] _args Completely ignored
+      # @return [True] Logging is always successful.
+      def log(*_args)
         true
       end
+
+      alias_method :add, :log
+      alias_method :debug, :log
+      alias_method :error, :log
+      alias_method :fatal, :log
+      alias_method :info, :log
+      alias_method :unknown, :log
+      alias_method :warn, :log
+
+      # Handle all other method calls simply and directly. Normally this would
+      # potentially be a dangerous thing to do but anything that would be
+      # calling this needs to explicitely do nothing.
+      #
+      # For edge cases that crop up in the future, specific methods may need to
+      # be implemented directly.
+      #
+      # @param [Array<Object>] _args Unused
+      def method_missing(*_args)
+        true
+      end
+
+      alias_method :respond_to?, :method_missing
     end
   end
 end

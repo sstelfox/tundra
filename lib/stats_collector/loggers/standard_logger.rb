@@ -1,26 +1,16 @@
 module StatsCollector
   module Loggers
-    LOG_LEVELS = {
-      debug:    ::Logger::DEBUG,
-      info:     ::Logger::INFO,
-      warn:     ::Logger::WARN,
-      error:    ::Logger::ERROR,
-      fatal:    ::Logger::FATAL,
-      unknown:  ::Logger::UNKNOWN
-    }
-    LOG_NAME = 'StatsCollector'
-
     # The normal logger for this gem, this handles writing all logs to the
     # configured location. For now that's just STDOUT but eventually it will be
     # a configured log location, though I'm not sure how I'm going to handle
     # that yet.
+    #
+    # @attr_reader [Object#log] :logger Any object implementing the log method,
+    #   will be used as the output for all logged messages. Defaults to an
+    #   instance of the standard Ruby Logger class.
     class StandardLogger
       def initialize
         @logger = ::Logger.new(STDOUT)
-      end
-
-      def <<(msg)
-        logger << msg
       end
 
       def debug(message)
@@ -40,10 +30,10 @@ module StatsCollector
       end
 
       def log(severity, message)
-        logger.add(severity_lookup(severity), message, APP_LOG_NAME)
+        logger.log(severity_lookup(severity), message, APP_LOG_NAME)
       end
 
-      alias :add :log
+      alias_method :add, :log
 
       def severity_lookup(severity)
         LOG_LEVELS[severity.to_sym] || LOG_LEVELS[:unknown]
