@@ -5,7 +5,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'tundra/version'
 
 Gem::Specification.new do |spec|
-  spec.name     = 'stats_collector'
+  spec.name     = 'tundra'
   spec.version  = Tundra::VERSION
   spec.authors  = ['Sam Stelfox']
   spec.email    = ['sstelfox@bedroomprogrammers.net']
