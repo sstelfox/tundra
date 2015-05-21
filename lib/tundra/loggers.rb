@@ -1,7 +1,8 @@
-require 'stats_collector/loggers/null_logger'
-require 'stats_collector/loggers/standard_logger'
+require 'tundra/loggers/memory_logger'
+require 'tundra/loggers/null_logger'
+require 'tundra/loggers/standard_logger'
 
-module StatsCollector
+module Tundra
   # All logging functionality is handled under this namespace.
   module Loggers
     # A simple mapping between symbolic representations of log level and the

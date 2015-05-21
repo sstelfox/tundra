@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe(StatsCollector::RingBuffer) do
+RSpec.describe(Tundra::RingBuffer) do
   let(:buffer_size) { 5 }
   subject { described_class.new(buffer_size) }
 

@@ -1,4 +1,4 @@
-module StatsCollector
+module Tundra
   module Loggers
     # The normal logger for this gem, this handles writing all logs to the
     # configured location. For now that's just STDOUT but eventually it will be
@@ -14,7 +14,37 @@ module StatsCollector
       # logger.
       def initialize
         @logger = ::Logger.new(STDOUT)
+        self.level = :info
       end
+
+      # @!group Configuration
+
+      # Returns the currently configured log level for this instance as a
+      # symbol.
+      #
+      # @return [Symbol]
+      def level
+        level_lookup[logger.level]
+      end
+
+      # Set the log level output to the provided level. If the new level is
+      # invalid it will default to info.
+      def level=(new_level)
+        logger.level = severity_lookup(new_level, :info)
+      end
+
+      # Log the provided message at the provided severity level.
+      #
+      # @param [Symbol] severity The severity to log the message.
+      # @param [String] message The message to get logged.
+      def log(severity, message)
+        logger.log(severity_lookup(severity), message, LOG_NAME)
+      end
+
+      alias_method :add, :log
+
+      # @!endgroup
+      # @!group Log Shortcut Methods
 
       # Log the provided message at the debug level.
       #
@@ -44,16 +74,6 @@ module StatsCollector
         log(:info, message)
       end
 
-      # Log the provided message at the provided severity level.
-      #
-      # @param [Symbol] severity The severity to log the message.
-      # @param [String] message The message to get logged.
-      def log(severity, message)
-        logger.log(severity_lookup(severity), message, LOG_NAME)
-      end
-
-      alias_method :add, :log
-
       # Log the provided message at the unknown level.
       #
       # @param [String] message The message to get logged.
@@ -68,9 +88,19 @@ module StatsCollector
         log(:warn, message)
       end
 
+      # @!endgroup
+
       protected
 
       attr_reader :logger
+
+      # A reverse lookup table from the log level constant to the associated
+      # symbol that are easier to work with.
+      #
+      # @return [Hash<Fixnum=>Symbol>] The reverse lookup table.
+      def level_lookup
+        LOG_LEVELS.invert
+      end
 
       # Given a string or symbol this will lookup the appropriate log level
       # constant matching the name. If the name is invalid it will fallback on
@@ -78,9 +108,11 @@ module StatsCollector
       #
       # @param [String,Symbol] severity The severity to convert to the
       #   appropriate constant.
+      # @param [Symbol] fallback In the event the severity provided isn't
+      #   value, the fallback value will be used.
       # @return [Fixnum] The value of the severity constant.
-      def severity_lookup(severity)
-        LOG_LEVELS[severity.to_sym] || LOG_LEVELS[:unknown]
+      def severity_lookup(severity, fallback = :unknown)
+        LOG_LEVELS[severity.to_sym] || LOG_LEVELS[fallback]
       end
     end
   end

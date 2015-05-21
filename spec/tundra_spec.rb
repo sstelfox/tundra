@@ -1,12 +1,12 @@
 require 'spec_helper'
 
-RSpec.describe(StatsCollector) do
+RSpec.describe(Tundra) do
   it 'has a version number' do
-    expect(StatsCollector::VERSION).not_to be nil
+    expect(Tundra::VERSION).not_to be nil
   end
 
   context 'logger singleton' do
-    let(:default_logger) { StatsCollector::Loggers::StandardLogger }
+    let(:default_logger) { Tundra::Loggers::StandardLogger }
 
     after(:each) do
       # We need to reset the state of the logger singleton to ensure the tests

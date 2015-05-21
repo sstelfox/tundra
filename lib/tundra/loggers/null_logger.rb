@@ -1,4 +1,4 @@
-module StatsCollector
+module Tundra
   module Loggers
     # Instances of this logger are useful for blackholing messages that would
     # otherwise by logged. It directly implements the most common called
