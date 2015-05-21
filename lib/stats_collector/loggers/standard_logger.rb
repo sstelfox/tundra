@@ -5,9 +5,10 @@ module StatsCollector
     # a configured log location, though I'm not sure how I'm going to handle
     # that yet.
     #
-    # @attr_reader [Object#log] :logger Any object implementing the log method,
-    #   will be used as the output for all logged messages. Defaults to an
-    #   instance of the standard Ruby Logger class.
+    # @!attribute [r] logger
+    #   @return [Object#log] Any object implementing the log method, will be
+    #     used as the output for all logged messages. Defaults to an instance
+    #     of the standard Ruby Logger class.
     class StandardLogger
       # Simple initialization of the standard logger. Just creates the backend
       # logger.
