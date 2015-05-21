@@ -43,6 +43,13 @@ module StatsCollector
       ring.each { |item| yield(item) }
     end
 
+    # Tests whether or not the ring has any contents.
+    #
+    # @return [Boolean]
+    def empty?
+      ring.empty?
+    end
+
     # Setup a new instance of the RingBuffer class.
     #
     # @param [Fixnum] ring_size The maximum number of elements the ring buffer
