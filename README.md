@@ -1,11 +1,11 @@
-# StatsCollector
+# Tundra
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'stats_collector'
+gem 'tundra'
 ```
 
 And then execute:
@@ -14,7 +14,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install stats_collector
+    $ gem install tundra
 
 ## Usage
 
@@ -34,7 +34,7 @@ With all that said, if you'd like to contribute please follow the standard
 contribution guide:
 
 1. Review the [Contributor Code of Conduct][1]
-2. Fork it (https://github.com/sstelfox/stats_collector/fork)
+2. Fork it (https://github.com/sstelfox/tundra/fork)
 3. Create your feature branch (`git checkout -b my-new-feature`)
 4. Commit your changes (`git commit -am 'Add some feature'`)
 5. Push to the branch (`git push origin my-new-feature`)

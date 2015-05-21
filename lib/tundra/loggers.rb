@@ -17,6 +17,6 @@ module Tundra
     }
 
     # The 'progname' value used when printing logs.
-    LOG_NAME = 'StatsCollector'
+    LOG_NAME = 'Tundra'
   end
 end

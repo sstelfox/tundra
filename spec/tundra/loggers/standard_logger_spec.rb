@@ -77,27 +77,27 @@ RSpec.describe(Tundra::Loggers::StandardLogger) do
       expect(subject.send(:level_lookup)).to be_instance_of(Hash)
     end
 
-    it 'can return the :debug symbol when provided with the DEBUG constant' do
+    it 'returns the :debug symbol when provided with the DEBUG constant' do
       expect(subject.send(:level_lookup)[::Logger::DEBUG]).to be(:debug)
     end
 
-    it 'can return the :info symbol when provided with the INFO constant' do
+    it 'returns the :info symbol when provided with the INFO constant' do
       expect(subject.send(:level_lookup)[::Logger::INFO]).to be(:info)
     end
 
-    it 'can return the :warn symbol when provided with the WARN constant' do
+    it 'returns the :warn symbol when provided with the WARN constant' do
       expect(subject.send(:level_lookup)[::Logger::WARN]).to be(:warn)
     end
 
-    it 'can return the :error symbol when provided with the ERROR constant' do
+    it 'returns the :error symbol when provided with the ERROR constant' do
       expect(subject.send(:level_lookup)[::Logger::ERROR]).to be(:error)
     end
 
-    it 'can return the :fatal symbol when provided with the FATAL constant' do
+    it 'returns the :fatal symbol when provided with the FATAL constant' do
       expect(subject.send(:level_lookup)[::Logger::FATAL]).to be(:fatal)
     end
 
-    it 'can return the :unknown symbol when provided with the UNKNOWN constant' do
+    it 'returns the :unknown symbol when provided with the UNKNOWN constant' do
       expect(subject.send(:level_lookup)[::Logger::UNKNOWN]).to be(:unknown)
     end
   end
@@ -132,7 +132,8 @@ RSpec.describe(Tundra::Loggers::StandardLogger) do
     end
 
     it 'can return a provided constant when provided with a bad value' do
-      expect(subject.send(:severity_lookup, 'weooo', :info)).to eq(::Logger::INFO)
+      result = subject.send(:severity_lookup, 'weooo', :info)
+      expect(result).to eq(::Logger::INFO)
     end
   end
 end
