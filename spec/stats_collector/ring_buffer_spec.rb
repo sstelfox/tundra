@@ -79,7 +79,7 @@ RSpec.describe(StatsCollector::RingBuffer) do
       expect(subject.to_a).to eq(new_contents)
     end
 
-    it 'replaces the contents with the last items if there are too many items' do
+    it 'replaces the contents with the last items if there are too many' do
       new_contents = [1, 2, 3, 4, 5, 6]
       subject.ring = new_contents
 
