@@ -18,6 +18,24 @@ module Tundra
   class IPCPipe
     attr_reader :read_pipe, :write_pipe
 
+    # Reverses the length encoding, providing the number of bytes that need to
+    # be read off the pipe to get the complete message.
+    #
+    # @param [String] bytes
+    # @return [Fixnum]
+    def self.decode_length(bytes)
+      bytes.unpack('L>').first
+    end
+
+    # Encode the length in a 32 bit byte string ready to be sent preceeding any
+    # socket messages.
+    #
+    # @param [Fixnum] len The length of a messages
+    # @return [String]
+    def self.encode_length(len)
+      [len].pack('L>')
+    end
+
     # Check to see whether this end of the pipe is still open (works regardless
     # of which side of the communications channel this gets called on).
     #
@@ -59,7 +77,7 @@ module Tundra
       return if read_pipe.closed?
       return unless (raw_bytes = read_pipe.readbyte(4))
 
-      length = decode_length(raw_bytes)
+      length = self.class.decode_length(raw_bytes)
       read_pipe.binread(length)
     end
 
@@ -74,33 +92,13 @@ module Tundra
     def write_message(msg)
       return if write_pipe.closed?
 
-      write_pipe.binwrite(encode_length(msg.length))
+      write_pipe.binwrite(self.class.encode_length(msg.length))
       write_pipe.binwrite(msg)
     end
 
     # Perform thread specific setup for the write side of the pipe.
     def write_thread_setup
       read_pipe.close unless read_pipe.closed?
-    end
-
-    protected
-
-    # Reverses the length encoding, providing the number of bytes that need to
-    # be read off the pipe to get the complete message.
-    #
-    # @param [String] bytes
-    # @return [Fixnum]
-    def decode_length(bytes)
-      bytes.unpack('L>').first
-    end
-
-    # Encode the length in a 32 bit byte string ready to be sent preceeding any
-    # socket messages.
-    #
-    # @param [Fixnum] len The length of a messages
-    # @return [String]
-    def encode_length(len)
-      [len].pack('L>')
     end
   end
 end

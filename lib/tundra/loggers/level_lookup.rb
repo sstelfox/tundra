@@ -5,7 +5,7 @@ module Tundra
       # symbol that are easier to work with.
       #
       # @return [Hash<Fixnum=>Symbol>] The reverse lookup table.
-      def level_lookup
+      def self.level_lookup
         LOG_LEVELS.invert
       end
 
@@ -18,7 +18,7 @@ module Tundra
       # @param [Symbol] fallback In the event the severity provided isn't
       #   value, the fallback value will be used.
       # @return [Fixnum] The value of the severity constant.
-      def severity_lookup(severity, fallback = :unknown)
+      def self.severity_lookup(severity, fallback = :unknown)
         LOG_LEVELS[severity] || LOG_LEVELS[fallback]
       end
     end

@@ -4,11 +4,6 @@ require 'shared_examples/common_logger_examples'
 RSpec.describe(Tundra::Loggers::StandardLogger) do
   it_behaves_like 'a logger'
 
-  it 'level lookup mixin to be included' do
-    expect(described_class.ancestors)
-      .to(include(::Tundra::Loggers::LevelLookup))
-  end
-
   let(:log_double) { double('Logger') }
   let(:prog_name) { Tundra::Loggers::LOG_NAME }
 
@@ -23,7 +18,8 @@ RSpec.describe(Tundra::Loggers::StandardLogger) do
 
   it 'looks up the severity symbol using #severity_lookup' do
     expect(subject).to receive(:logger).and_return(log_double)
-    expect(subject).to receive(:severity_lookup).and_return(-5)
+    expect(::Tundra::Loggers::LevelLookup).to receive(:severity_lookup)
+      .with(:stub).and_return(-5)
     expect(log_double).to receive(:log).with(-5, 'msg', prog_name)
 
     subject.log(:stub, 'msg')

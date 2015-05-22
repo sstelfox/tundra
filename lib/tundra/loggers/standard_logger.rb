@@ -11,7 +11,6 @@ module Tundra
     #     of the standard Ruby Logger class.
     class StandardLogger
       include ExceptionLogging
-      include LevelLookup
       include LevelShortcuts
       include LogOnce
 
@@ -28,7 +27,7 @@ module Tundra
       # @param [Symbol] severity The severity to log the message.
       # @param [String] message The message to get logged.
       def log(severity, message)
-        logger.log(severity_lookup(severity), message, LOG_NAME)
+        logger.log(LevelLookup.severity_lookup(severity), message, LOG_NAME)
       end
 
       alias_method :add, :log
@@ -40,13 +39,13 @@ module Tundra
       #
       # @return [Symbol]
       def level
-        level_lookup[logger.level]
+        LevelLookup.level_lookup[logger.level]
       end
 
       # Set the log level output to the provided level. If the new level is
       # invalid it will default to info.
       def level=(new_level)
-        logger.level = severity_lookup(new_level, :info)
+        logger.level = LevelLookup.severity_lookup(new_level, :info)
       end
 
       # @!endgroup
