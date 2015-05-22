@@ -37,22 +37,6 @@ module Tundra
       sum / count unless count.zero?
     end
 
-    # Merge this stat collection with another one. I'm concerned about the sum
-    # of square addition here. The two stats will have different running means
-    # as the sum of squares is being generated. It's already going to be
-    # inaccurate though as it's not using the final mean of the dataset to
-    # compare against. For now it's probably 'good enough'
-    #
-    # @param [::Tundra::Stat] stat
-    def merge(stat)
-      self.count += stat.count
-      self.sum += stat.sum
-      self.sum_of_squares += stat.sum_of_squares
-
-      update_maximum(data_point.maximum)
-      update_minimum(data_point.minimum)
-    end
-
     # Record a new data point in the running statistics.
     #
     # @param [Fixnum,Float] data_point The value to record in the running

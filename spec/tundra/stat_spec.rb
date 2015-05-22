@@ -86,13 +86,13 @@ RSpec.describe(::Tundra::Stat) do
     square_values = [
       [[2, 2, 2, 2], 0.0],
       [[3, 7, -7, 18], 230.5625],
-      [[-18, -100, 123], 16402.777777777777],
+      [[-18, -100, 123], 16_402.777777777777],
       [[2, -2], 4.0]
     ]
 
     square_values.each do |records, result|
       test_name = format('returns the sum of square %2.1f with data %s',
-        result, records.inspect)
+                         result, records.inspect)
 
       it test_name do
         records.each { |i| subject.record(i) }
@@ -138,7 +138,7 @@ RSpec.describe(::Tundra::Stat) do
   end
 
   context '#variance' do
-    it 'should return nil when no records have been recorded' do
+    it 'returns nil when no records have been recorded' do
       expect(subject.variance).to be_nil
     end
 
@@ -151,7 +151,7 @@ RSpec.describe(::Tundra::Stat) do
 
     variance_data.each do |records, result|
       test_name = format('returns the variance %2.1f with data %s', result,
-        records.inspect)
+                         records.inspect)
 
       it test_name do
         records.each { |i| subject.record(i) }
