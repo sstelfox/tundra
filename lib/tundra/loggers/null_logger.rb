@@ -8,6 +8,13 @@ module Tundra
     class NullLogger
       include ExceptionLogging
       include LevelShortcuts
+      include LogOnce
+
+      # We still need to support initializing the log once information even if
+      # there isn't any other work to be done.
+      def initialize
+        initialize_log_once
+      end
 
       # A logging method that does exactly nothing, as any good null logger
       # should. These could be handled by method missing but the direct method

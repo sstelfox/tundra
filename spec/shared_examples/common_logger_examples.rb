@@ -16,4 +16,13 @@ RSpec.shared_examples('a logger') do
     expect(described_class.ancestors)
       .to(include(::Tundra::Loggers::LevelShortcuts))
   end
+
+  it 'log once mixin to be included' do
+    expect(described_class.ancestors).to(include(::Tundra::Loggers::LogOnce))
+  end
+
+  it 'calls the LogOnce initializer' do
+    expect_any_instance_of(described_class).to receive(:initialize_log_once)
+    subject
+  end
 end

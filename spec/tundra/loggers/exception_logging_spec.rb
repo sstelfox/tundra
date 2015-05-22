@@ -7,6 +7,9 @@ RSpec.describe(Tundra::Loggers::ExceptionLogging) do
   class StubLogger
     include ::Tundra::Loggers::ExceptionLogging
 
+    # Logging is the required API the class is required to implement. This does
+    # nothing and exclusively exists to allow stubbing replacements of this
+    # method.
     def log(_sev, _msg)
     end
   end

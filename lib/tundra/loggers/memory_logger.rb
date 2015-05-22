@@ -1,5 +1,11 @@
 module Tundra
   module Loggers
+    # The maximum number of messages the memory logger will store at any given
+    # time. This is probably more than enough but generally won't take much
+    # memory so is safe to increase in the future if it ever gets to be a
+    # problem.
+    LOG_MEMORY_RING_SIZE = 100
+
     # An in memory ring buffer based logger. This is useful for collecting and
     # containing a limited number of messages in memory before the program has
     # a chance to configure a more useful logger. At that point the messages
@@ -15,6 +21,7 @@ module Tundra
     class MemoryLogger
       include ExceptionLogging
       include LevelShortcuts
+      include LogOnce
 
       # Takes a logger and logs all the stored messages to the provided logger
       # instance. Once it's done dumping it empties the internal buffer to
@@ -28,6 +35,7 @@ module Tundra
 
       # Initialize an instance of a MemoryLogger
       def initialize
+        initialize_log_once
         self.messages = RingBuffer.new(LOG_MEMORY_RING_SIZE)
       end
 

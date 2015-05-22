@@ -12,12 +12,14 @@ module Tundra
     class StandardLogger
       include ExceptionLogging
       include LevelShortcuts
+      include LogOnce
 
       # Simple initialization of the standard logger. Just creates the backend
       # logger.
       def initialize
         @logger = ::Logger.new(STDOUT)
         self.level = :info
+        initialize_log_once
       end
 
       # Log the provided message at the provided severity level.
