@@ -1,6 +1,7 @@
 require 'logger'
 
 require 'tundra/loggers'
+require 'tundra/profilers'
 require 'tundra/ring_buffer'
 require 'tundra/version'
 
