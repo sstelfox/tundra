@@ -80,8 +80,7 @@ RSpec.describe(Tundra::Loggers::ExceptionLogging) do
 
   context '#backtrace_messages' do
     it 'returns a useful log message when a backtrace isn\'t available' do
-      allow(sample_exception).to receive(:backtrace).and_return(nil)
-      messages = subject.send(:backtrace_messages, sample_exception)
+      messages = subject.send(:backtrace_messages, nil)
 
       expect(messages).to be_instance_of(Array)
       expect(messages.length).to eq(1)
@@ -89,8 +88,7 @@ RSpec.describe(Tundra::Loggers::ExceptionLogging) do
     end
 
     it 'returns the contents of the backtrace' do
-      allow(sample_exception).to receive(:backtrace).and_return(:sample)
-      expect(subject.send(:backtrace_messages, sample_exception)).to eq(:sample)
+      expect(subject.send(:backtrace_messages, [:sample])).to eq([:sample])
     end
   end
 end

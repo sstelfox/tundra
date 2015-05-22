@@ -18,33 +18,10 @@ RSpec.describe(Tundra::Loggers::LevelShortcuts) do
 
   let(:sample_message) { 'Irrelevant test string' }
 
-  it 'logs at the debug level' do
-    expect(subject).to receive(:log).with(:debug, sample_message)
-    subject.debug(sample_message)
-  end
-
-  it 'logs at the info level' do
-    expect(subject).to receive(:log).with(:info, sample_message)
-    subject.info(sample_message)
-  end
-
-  it 'logs at the warn level' do
-    expect(subject).to receive(:log).with(:warn, sample_message)
-    subject.warn(sample_message)
-  end
-
-  it 'logs at the error level' do
-    expect(subject).to receive(:log).with(:error, sample_message)
-    subject.error(sample_message)
-  end
-
-  it 'logs at the fatal level' do
-    expect(subject).to receive(:log).with(:fatal, sample_message)
-    subject.fatal(sample_message)
-  end
-
-  it 'logs at the unknown level' do
-    expect(subject).to receive(:log).with(:unknown, sample_message)
-    subject.unknown(sample_message)
+  %i(debug info warn error fatal unknown).each do |level|
+    it format('logs at the %s level', level) do
+      expect(subject).to receive(:log).with(level, sample_message)
+      subject.send(level, sample_message)
+    end
   end
 end

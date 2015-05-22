@@ -6,7 +6,8 @@ valid_entries = []
 
 File.read(ARGV[0]).split("\n\n").each do |proc_entry|
   entry = {}
-  useful_keys = ['core id', 'cpu cores', 'cpu MHz', 'processor', 'physical id', 'siblings']
+  useful_keys = ['core id', 'cpu cores', 'cpu MHz', 'processor', 'physical id',
+    'siblings']
 
   proc_entry.split("\n").each do |l|
     key, value = l.split(/\s+:\s+/)

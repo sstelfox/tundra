@@ -64,7 +64,8 @@ RSpec.describe(Tundra::Loggers::StandardLogger) do
     end
 
     it 'returns the :unknown symbol when provided with the UNKNOWN constant' do
-      expect(described_class.send(:level_lookup)[::Logger::UNKNOWN]).to be(:unknown)
+      expect(described_class.send(:level_lookup)[::Logger::UNKNOWN])
+        .to be(:unknown)
     end
   end
 

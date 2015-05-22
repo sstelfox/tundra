@@ -17,20 +17,20 @@ module Tundra
       # @param [Symbol] backtrace_level Severity to log the backtrace at.
       def exception(err, level = :error, backtrace_level = :debug)
         log(level, format('%p: %s', err.class, err.message))
-        backtrace_messages(err).each { |msg| log(backtrace_level, msg) }
-        true
+        backtrace_messages(err.backtrace).each do |msg|
+          log(backtrace_level, msg)
+        end
       end
 
       protected
 
-      # Extracts the backtrace from the provided object. If there isn't a
-      # backtrace available this will return a message to send in it's place.
+      # Returns the backtrace or an array with an appropriate message if there
+      # aren't any messages.
       #
-      # @param [Exception] error_obj
+      # @param [Array<String>,Nil] backtrace
       # @return [Array<String>]
-      def backtrace_messages(error_obj)
-        return ['No backtrace available.'] if error_obj.backtrace.nil?
-        error_obj.backtrace
+      def backtrace_messages(backtrace)
+        backtrace || ['No backtrace available.']
       end
     end
   end
