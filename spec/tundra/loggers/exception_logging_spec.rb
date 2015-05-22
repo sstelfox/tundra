@@ -77,18 +77,4 @@ RSpec.describe(Tundra::Loggers::ExceptionLogging) do
       subject.exception(sample_exception)
     end
   end
-
-  context '#backtrace_messages' do
-    it 'returns a useful log message when a backtrace isn\'t available' do
-      messages = subject.send(:backtrace_messages, nil)
-
-      expect(messages).to be_instance_of(Array)
-      expect(messages.length).to eq(1)
-      expect(messages.first).to eq('No backtrace available.')
-    end
-
-    it 'returns the contents of the backtrace' do
-      expect(subject.send(:backtrace_messages, [:sample])).to eq([:sample])
-    end
-  end
 end
