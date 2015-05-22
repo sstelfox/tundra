@@ -7,10 +7,13 @@ RSpec.shared_examples('a logger') do
   it { expect(subject).to respond_to(:level) }
   it { expect(subject).to respond_to(:level=) }
 
-  it { expect(subject).to respond_to(:debug) }
-  it { expect(subject).to respond_to(:error) }
-  it { expect(subject).to respond_to(:fatal) }
-  it { expect(subject).to respond_to(:info) }
-  it { expect(subject).to respond_to(:warn) }
-  it { expect(subject).to respond_to(:unknown) }
+  it 'exception logging mixin to be included' do
+    expect(described_class.ancestors)
+      .to(include(::Tundra::Loggers::ExceptionLogging))
+  end
+
+  it 'level shortcuts mixin to be included' do
+    expect(described_class.ancestors)
+      .to(include(::Tundra::Loggers::LevelShortcuts))
+  end
 end

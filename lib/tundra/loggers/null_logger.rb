@@ -6,6 +6,7 @@ module Tundra
     # arguments. Other calls are handled by method missing which is slower but
     # ensures complete compatibility with the Logger mechanism.
     class NullLogger
+      include ExceptionLogging
       include LevelShortcuts
 
       # A logging method that does exactly nothing, as any good null logger

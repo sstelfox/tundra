@@ -10,6 +10,7 @@ module Tundra
     #     used as the output for all logged messages. Defaults to an instance
     #     of the standard Ruby Logger class.
     class StandardLogger
+      include ExceptionLogging
       include LevelShortcuts
 
       # Simple initialization of the standard logger. Just creates the backend

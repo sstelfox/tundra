@@ -13,6 +13,7 @@ module Tundra
     # @!attribute [rw] messages
     #   @return [Array<Array(Symbol, String)>] List of backlogged messages.
     class MemoryLogger
+      include ExceptionLogging
       include LevelShortcuts
 
       # Takes a logger and logs all the stored messages to the provided logger

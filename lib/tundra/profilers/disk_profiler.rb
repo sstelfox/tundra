@@ -12,7 +12,7 @@ module Tundra
       end
 
       def stat_file
-        "/proc/#{$$}/io"
+        "/proc/#{$PID}/io"
       end
 
       def stat_file_lines
