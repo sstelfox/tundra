@@ -3,6 +3,7 @@ require 'logger'
 require 'tundra/loggers'
 require 'tundra/profilers'
 require 'tundra/ring_buffer'
+require 'tundra/stat'
 require 'tundra/version'
 
 # Parent namespace for this codebase, encapsulating everything within this
