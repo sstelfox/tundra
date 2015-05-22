@@ -20,8 +20,9 @@ module Tundra
       # should. These could be handled by method missing but the direct method
       # provides a significant performance improvement.
       #
-      # @param [Array<Object>] _args Completely ignored
-      def log(*_args)
+      # @param [Symbol] _severity Completely ignored
+      # @param [Symbol] _message Completely ignored
+      def log(_severity, _message)
       end
 
       alias_method :add, :log
