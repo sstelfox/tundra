@@ -37,9 +37,9 @@ RSpec.describe(::Tundra::Stat) do
       [[3.0, 7.0, 10.0, 10.0, 0.0], 6.0]
     ]
 
-    mean_values.each do |values, mean|
-      it format('returns the mean %2.1f with data %s', mean, values.inspect) do
-        values.each { |i| subject.record(i) }
+    mean_values.each do |records, mean|
+      it format('returns the mean %2.1f with data %s', mean, records.inspect) do
+        records.each { |i| subject.record(i) }
         expect(subject.mean).to eq(mean)
       end
     end
@@ -81,6 +81,23 @@ RSpec.describe(::Tundra::Stat) do
     it 'sets the sum of squares to 0 with only one value' do
       subject.record(11)
       expect(subject.sum_of_squares).to eq(0.0)
+    end
+
+    square_values = [
+      [[2, 2, 2, 2], 0.0],
+      [[3, 7, -7, 18], 230.5625],
+      [[-18, -100, 123], 16402.777777777777],
+      [[2, -2], 4.0]
+    ]
+
+    square_values.each do |records, result|
+      test_name = format('returns the sum of square %2.1f with data %s',
+        result, records.inspect)
+
+      it test_name do
+        records.each { |i| subject.record(i) }
+        expect(subject.sum_of_squares).to eq(result)
+      end
     end
   end
 
