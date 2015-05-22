@@ -16,11 +16,11 @@ task :default do
   }
 
   tasks.each do |task, title|
-    if Rake::Task.task_defined?(task)
-      puts format("%s:\n", title)
-      Rake::Task[task].invoke
-      puts
-    end
+    next unless Rake::Task.task_defined?(task)
+
+    puts format("%s:\n", title)
+    Rake::Task[task].invoke
+    puts
   end
 end
 
