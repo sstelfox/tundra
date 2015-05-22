@@ -70,33 +70,38 @@ RSpec.describe(Tundra::Loggers::StandardLogger) do
 
   context '#severity_lookup' do
     it 'returns the DEBUG constant when provided with :debug' do
-      expect(described_class.send(:severity_lookup, :debug)).to eq(::Logger::DEBUG)
+      expect(described_class.send(:severity_lookup, :debug))
+        .to eq(::Logger::DEBUG)
     end
 
     it 'returns the INFO constant when provided with :info' do
-      expect(described_class.send(:severity_lookup, :info)).to eq(::Logger::INFO)
+      expect(described_class.send(:severity_lookup, :info))
+        .to eq(::Logger::INFO)
     end
 
     it 'returns the WARN constant when provided with :warn' do
-      expect(described_class.send(:severity_lookup, :warn)).to eq(::Logger::WARN)
+      expect(described_class.send(:severity_lookup, :warn))
+        .to eq(::Logger::WARN)
     end
 
     it 'returns the ERROR constant when provided with :error' do
-      expect(described_class.send(:severity_lookup, :error)).to eq(::Logger::ERROR)
+      expect(described_class.send(:severity_lookup, :error))
+        .to eq(::Logger::ERROR)
     end
 
     it 'returns the FATAL constant when provided with :fatal' do
-      expect(described_class.send(:severity_lookup, :fatal)).to eq(::Logger::FATAL)
+      expect(described_class.send(:severity_lookup, :fatal))
+        .to eq(::Logger::FATAL)
     end
 
     it 'returns the UNKNOWN constant when provided with :unknown' do
       expect(described_class.send(:severity_lookup, :unknown))
-        .to(eq(::Logger::UNKNOWN))
+        .to eq(::Logger::UNKNOWN)
     end
 
     it 'returns the value of the UNKNOWN constant when provided a bad value' do
       expect(described_class.send(:severity_lookup, 'what?'))
-        .to(eq(::Logger::UNKNOWN))
+        .to eq(::Logger::UNKNOWN)
     end
 
     it 'can return a provided constant when provided with a bad value' do
