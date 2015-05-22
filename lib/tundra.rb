@@ -1,5 +1,6 @@
 require 'logger'
 
+require 'tundra/ipc_pipe'
 require 'tundra/loggers'
 require 'tundra/profilers'
 require 'tundra/ring_buffer'
