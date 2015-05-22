@@ -136,4 +136,27 @@ RSpec.describe(::Tundra::Stat) do
       expect(subject.sum_of_squares).to be(0.0)
     end
   end
+
+  context '#variance' do
+    it 'should return nil when no records have been recorded' do
+      expect(subject.variance).to be_nil
+    end
+
+    variance_data = [
+      [[7, 7, 7], 0],
+      [[2, 3, 8, 1], 6.648148148148149],
+      [[1.7, 2.1, -8], 21.799999999999997],
+      [[-1, -2, -3, -4, -5], 1.875]
+    ]
+
+    variance_data.each do |records, result|
+      test_name = format('returns the variance %2.1f with data %s', result,
+        records.inspect)
+
+      it test_name do
+        records.each { |i| subject.record(i) }
+        expect(subject.variance).to eq(result)
+      end
+    end
+  end
 end
