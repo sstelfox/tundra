@@ -5,7 +5,7 @@ module Tundra
     # runaway memory usage, though practically I doubt it'll ever get this
     # full. I should track this usage in a metric to prove that to myself
     # though.
-    LOG_ONCE_MAX_KEYS = 1000
+    LOG_ONCE_MAX_KEYS = 250
 
     # Provides a mechanism to log certain types of messages only once. Expects
     # to be included in a class that implements a #log message.
