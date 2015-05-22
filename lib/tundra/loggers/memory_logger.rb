@@ -30,7 +30,7 @@ module Tundra
       # @param [#log] logger The logger instance to dump to.
       def dump_to_logger(logger)
         messages.each { |severity, message| logger.log(severity, message) }
-        messages.clear!
+        messages.clear
       end
 
       # Initialize an instance of a MemoryLogger

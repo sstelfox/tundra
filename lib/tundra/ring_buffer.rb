@@ -28,7 +28,7 @@ module Tundra
     alias_method :push, :<<
 
     # Completely empty out the internal ring.
-    def clear!
+    def clear
       ring.clear
     end
 

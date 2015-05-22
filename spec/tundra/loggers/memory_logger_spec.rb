@@ -40,7 +40,7 @@ RSpec.describe(::Tundra::Loggers::MemoryLogger) do
 
     it 'empties the internal buffer after dumping the messages' do
       allow(log_double).to receive(:log).with(severity, message)
-      expect(subject.send(:messages)).to receive(:clear!)
+      expect(subject.send(:messages)).to receive(:clear)
 
       subject.log(severity, message)
       subject.dump_to_logger(log_double)

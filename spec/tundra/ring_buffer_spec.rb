@@ -16,7 +16,7 @@ RSpec.describe(Tundra::RingBuffer) do
     it 'empties the contents of the buffer' do
       subject << rand(50)
       expect(subject).to_not be_empty
-      subject.clear!
+      subject.clear
       expect(subject).to be_empty
     end
   end
