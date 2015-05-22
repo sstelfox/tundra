@@ -1,4 +1,5 @@
 require 'tundra/loggers/exception_logging'
+require 'tundra/loggers/level_lookup'
 require 'tundra/loggers/level_shortcuts'
 require 'tundra/loggers/log_once'
 
