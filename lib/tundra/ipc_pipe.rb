@@ -64,7 +64,7 @@ module Tundra
     end
 
     # Perform thread specific setup for the read side of the pipe.
-    def read_side_setup
+    def read_thread_setup
       write_pipe.close unless write_pipe.closed?
     end
 
@@ -79,7 +79,7 @@ module Tundra
     end
 
     # Perform thread specific setup for the write side of the pipe.
-    def write_side_setup
+    def write_thread_setup
       read_pipe.close unless read_pipe.closed?
     end
 

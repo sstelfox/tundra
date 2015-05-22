@@ -43,9 +43,8 @@ module Tundra
     # be evaluated lazily and iteratable.
     #
     # @yieldparam [Object] item Individual contents of the ring
-    def each
-      return ring.each unless block_given?
-      ring.each { |item| yield(item) }
+    def each(&blk)
+      ring.each(&blk)
     end
 
     # Tests whether or not the ring has any contents.
