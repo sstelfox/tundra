@@ -27,6 +27,14 @@ module Tundra
         logged_mutex.synchronize { logged_keys.clear }
       end
 
+      # Quick boolean check to determine if the internal key cache has gotten
+      # full yet or not.
+      #
+      # @return [Boolean]
+      def full?
+        logged_keys.count >= LOG_ONCE_MAX_KEYS
+      end
+
       # A thread safe mechanism to ensure a key tagged message is logged only
       # once regardless of how many times the message may be getting triggered.
       # This doesn't support logging normalized exceptions or multiple lines
@@ -43,8 +51,7 @@ module Tundra
       # @param [String] message The message that should be logged.
       def log_once(level, key, message)
         logged_mutex.synchronize do
-          return if logged_keys.include?(key)
-          return if logged_keys.count >= LOG_ONCE_MAX_KEYS && key.is_a?(String)
+          return unless should_log?(key)
           logged_keys << key
         end
 
@@ -60,6 +67,17 @@ module Tundra
       def initialize_log_once
         @logged_keys = []
         @logged_mutex = ::Mutex.new
+      end
+
+      # Perform a check on whether or not we'd care to log the a message tagged
+      # with the provided key.
+      #
+      # @param [String,Symbol] key Key to check
+      # @return [Boolean]
+      def should_log?(key)
+        return false if logged_keys.include?(key)
+        return false if full? && key.is_a?(String)
+        true
       end
     end
   end
