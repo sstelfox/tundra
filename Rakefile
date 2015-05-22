@@ -11,6 +11,7 @@ task :default do
     docs: 'Document Generation',
     flay: 'Flay Report',
     flog: 'Flog Report',
+    reek: 'Reek Results',
     rubocop: 'RuboCop Report',
     spec: 'RSpec Tests'
   }
@@ -26,6 +27,7 @@ end
 
 begin
   require 'yard'
+
   YARD::Rake::YardocTask.new(:docs)
 rescue LoadError
   puts 'Yardoc isn\'t available to the rake environment'
@@ -52,6 +54,7 @@ end
 begin
   require 'flog_cli'
 
+  desc 'Analyze code complexity'
   task :flog do
     flog = FlogCLI.new(quiet: false, continue: false, parser: RubyParser,
                        score: true)
@@ -63,7 +66,20 @@ rescue LoadError
 end
 
 begin
+  require 'reek/rake/task'
+
+  Reek::Rake::Task.new do |t|
+    t.source_files = 'lib/'
+    t.verbose = false
+    t.fail_on_error = false
+  end
+rescue LoadError
+  puts 'Reek isn\'t available to the rake environment'
+end
+
+begin
   require 'rubocop/rake_task'
+
   RuboCop::RakeTask.new(:rubocop) do |task|
     task.formatters = %w(simple offenses)
     task.fail_on_error = false
@@ -75,6 +91,7 @@ end
 
 begin
   require 'rspec/core/rake_task'
+
   RSpec::Core::RakeTask.new(:spec)
 rescue LoadError
   puts 'RSpec isn\'t available to the rake environment'
