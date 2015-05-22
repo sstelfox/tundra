@@ -34,7 +34,7 @@ module Tundra
     #
     # @return [Float]
     def mean
-      sum / count
+      sum / count unless count.zero?
     end
 
     # Merge this stat collection with another one. I'm concerned about the sum
@@ -97,7 +97,7 @@ module Tundra
     #
     # @param [Fixnum,Float] value
     def update_maximum(value)
-      return unless maximum.nil? || value > maximum
+      return unless !maximum || value > maximum
       self.maximum = value
     end
 
@@ -106,7 +106,7 @@ module Tundra
     #
     # @param [Fixnum,Float] value
     def update_minimum(value)
-      return unless minimum.nil? || value < minimum
+      return unless !minimum || value < minimum
       self.minimum = value
     end
 
