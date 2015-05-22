@@ -79,14 +79,22 @@ module Tundra
 
     attr_writer :count, :minimum, :maximum, :sum, :sum_of_squares
 
+    # Track a new maximum value if the data point is larger than all other
+    # previous metrics or one hasn't been recorded yet.
+    #
+    # @param [Fixnum,Float] value
     def update_maximum(value)
-      if count == 1 || value > maximum
+      if maximum.nil? || value > maximum
         self.maximum = value
       end
     end
 
+    # Track a new minimum value if the data point is smaller than all other
+    # previous metrics or one hasn't been recorded yet.
+    #
+    # @param [Fixnum,Float] value
     def update_minimum(value)
-      if count == 1 || value < minimum
+      if minimum.nil? || value < minimum
         self.minimum = value
       end
     end
