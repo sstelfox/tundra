@@ -14,6 +14,27 @@ module Tundra
       include LevelShortcuts
       include LogOnce
 
+      # A reverse lookup table from the log level constant to the associated
+      # symbol that are easier to work with.
+      #
+      # @return [Hash<Fixnum=>Symbol>] The reverse lookup table.
+      def self.level_lookup
+        LOG_LEVELS.invert
+      end
+
+      # Given a string or symbol this will lookup the appropriate log level
+      # constant matching the name. If the name is invalid it will fallback on
+      # the unknown level.
+      #
+      # @param [String,Symbol] severity The severity to convert to the
+      #   appropriate constant.
+      # @param [Symbol] fallback In the event the severity provided isn't
+      #   value, the fallback value will be used.
+      # @return [Fixnum] The value of the severity constant.
+      def self.severity_lookup(severity, fallback = :unknown)
+        LOG_LEVELS[severity.to_sym] || LOG_LEVELS[fallback]
+      end
+
       # Simple initialization of the standard logger. Just creates the backend
       # logger.
       def initialize
@@ -27,7 +48,7 @@ module Tundra
       # @param [Symbol] severity The severity to log the message.
       # @param [String] message The message to get logged.
       def log(severity, message)
-        logger.log(severity_lookup(severity), message, LOG_NAME)
+        logger.log(self.class.severity_lookup(severity), message, LOG_NAME)
       end
 
       alias_method :add, :log
@@ -39,13 +60,13 @@ module Tundra
       #
       # @return [Symbol]
       def level
-        level_lookup[logger.level]
+        self.class.level_lookup[logger.level]
       end
 
       # Set the log level output to the provided level. If the new level is
       # invalid it will default to info.
       def level=(new_level)
-        logger.level = severity_lookup(new_level, :info)
+        logger.level = self.class.severity_lookup(new_level, :info)
       end
 
       # @!endgroup
@@ -53,27 +74,6 @@ module Tundra
       protected
 
       attr_reader :logger
-
-      # A reverse lookup table from the log level constant to the associated
-      # symbol that are easier to work with.
-      #
-      # @return [Hash<Fixnum=>Symbol>] The reverse lookup table.
-      def level_lookup
-        LOG_LEVELS.invert
-      end
-
-      # Given a string or symbol this will lookup the appropriate log level
-      # constant matching the name. If the name is invalid it will fallback on
-      # the unknown level.
-      #
-      # @param [String,Symbol] severity The severity to convert to the
-      #   appropriate constant.
-      # @param [Symbol] fallback In the event the severity provided isn't
-      #   value, the fallback value will be used.
-      # @return [Fixnum] The value of the severity constant.
-      def severity_lookup(severity, fallback = :unknown)
-        LOG_LEVELS[severity.to_sym] || LOG_LEVELS[fallback]
-      end
     end
   end
 end
