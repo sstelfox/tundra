@@ -37,7 +37,20 @@ module Tundra
       sum / count
     end
 
+    # Merge this stat collection with another one. I'm concerned about the sum
+    # of square addition here. The two stats will have different running means
+    # as the sum of squares is being generated. It's already going to be
+    # inaccurate though as it's not using the final mean of the dataset to
+    # compare against. For now it's probably 'good enough'
+    #
+    # @param [::Tundra::Stat] stat
     def merge(stat)
+      self.count += stat.count
+      self.sum += stat.sum
+      self.sum_of_squares += stat.sum_of_squares
+
+      update_maximum(data_point.maximum)
+      update_minimum(data_point.minimum)
     end
 
     # Record a new data point in the running statistics.
@@ -84,9 +97,8 @@ module Tundra
     #
     # @param [Fixnum,Float] value
     def update_maximum(value)
-      if maximum.nil? || value > maximum
-        self.maximum = value
-      end
+      return unless maximum.nil? || value > maximum
+      self.maximum = value
     end
 
     # Track a new minimum value if the data point is smaller than all other
@@ -94,9 +106,8 @@ module Tundra
     #
     # @param [Fixnum,Float] value
     def update_minimum(value)
-      if minimum.nil? || value < minimum
-        self.minimum = value
-      end
+      return unless minimum.nil? || value < minimum
+      self.minimum = value
     end
 
     # Sum over all observations, of the squared differences of each obversation
@@ -104,7 +115,7 @@ module Tundra
     # @param [Fixnum,Float] value The data point used to update the internal
     #   tracking of the sum of squares.
     def update_sum_of_squares(value)
-      self.sum_of_squares += ((value - mean) ** 2)
+      self.sum_of_squares += ((value - mean)**2)
     end
   end
 end
