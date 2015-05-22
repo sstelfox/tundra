@@ -29,14 +29,12 @@ module Tundra
       # Returns the lowest log level all loggers can agree to. This can be a
       # bit deceiving as any individual logger may be configured to a more
       # verbose setting. If there are no configured loggers this will return
-      # :debug as nothing claims it won't log to that level.
+      # :debug.
       #
       # @return [Symbol]
       def level
-        level = target_loggers.inject(0) do |value, logr|
-          (value > LOG_LEVELS[logr.level]) ? value : LOG_LEVELS[log.level]
-        end
-        LOG_LEVELS.invert[level]
+        log = target_loggers.sort_by { |logr| LOG_LEVELS[logr.level] }.last
+        log ? log.level : :debug
       end
 
       # Sets the severity log level of all configured loggers.
